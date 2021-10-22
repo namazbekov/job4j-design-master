@@ -24,8 +24,8 @@ public class ArrayIt implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        point++;
-        return data[data.length - point];
+
+        return data[point++];
     }
 
     @Override
@@ -33,12 +33,5 @@ public class ArrayIt implements Iterator<Integer> {
         return "Array : " + data[point];
     }
 
-    public static void main(String[] args) {
-        ArrayIt it = new ArrayIt(
-                new int[] {1, 2, 3}
-        );
 
-        assertThat(it.next(), is(2));
-
-    }
 }
