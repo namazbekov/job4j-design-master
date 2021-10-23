@@ -85,9 +85,36 @@ public class MatrixItTest {
     }
 
     @Test
+    public void whenMultiHashNext2() {
+        int[][] in = {
+                {}, {1}, {}, {1}
+        };
+        MatrixIt it = new MatrixIt(in);
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.hasNext(), is(true));
+    }
+
+    @Test
     public void whenNoElements() {
         int[][] in = {{}, {}, {}};
         MatrixIt it = new MatrixIt(in);
         assertThat(it.hasNext(), is(false));
     }
+
+    @Test
+    public void whenFewEmpty2() {
+        int[][] in = {
+                {1}, {}, {3}, {}, {2}
+        };
+        MatrixIt it = new MatrixIt(in);
+        assertThat(it.next(), is(1));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(3));
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(2));
+
+    }
+
 }
