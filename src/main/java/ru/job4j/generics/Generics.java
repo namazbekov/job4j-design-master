@@ -1,7 +1,6 @@
 package ru.job4j.generics;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,14 +19,14 @@ public class Generics {
         gen.printObject(third);
         System.out.println();
 
-
+//        gen.printBoundedWildCard(first);
         gen.printBoundedWildCard(second);
         gen.printBoundedWildCard(third);
         System.out.println();
 
         gen.printLowerBoundedWildCard(first);
         gen.printLowerBoundedWildCard(second);
-
+//        gen.printLowerBoundedWildCard(third);
     }
 
     public void printObject(List<?> list) {
