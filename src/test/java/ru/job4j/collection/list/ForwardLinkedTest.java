@@ -10,6 +10,16 @@ import static org.junit.Assert.assertThat;
 
 public class ForwardLinkedTest {
 
+
+    @Test
+    public void whenAddFist() {
+        ForwardLinked<Integer> list = new ForwardLinked<>();
+        list.addFirst(1);
+        list.deleteFirst();
+        list.addFirst(2);
+        assertThat(list.deleteFirst(), is(2));
+    }
+
     @Test(expected = NoSuchElementException.class)
     public void whenDeleteFirst() {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
