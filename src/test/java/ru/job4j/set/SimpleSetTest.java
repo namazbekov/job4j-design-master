@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 public class SimpleSetTest {
 
     @Test
-    public void whenAddNonNull() {
+    public void whenAddNotNull() {
         Set<Integer> set = new SimpleSet<>();
         assertTrue(set.add(1));
         assertTrue(set.contains(1));
@@ -20,6 +20,14 @@ public class SimpleSetTest {
         assertTrue(set.add(null));
         assertTrue(set.contains(null));
         assertFalse(set.add(null));
+    }
+
+    @Test
+    public void whenAddThreeTwoTime() {
+        Set<Integer> set = new SimpleSet<>();
+        assertTrue(set.add(3));
+        assertTrue(set.contains(3));
+        assertFalse(set.add(3));
     }
 
 }
