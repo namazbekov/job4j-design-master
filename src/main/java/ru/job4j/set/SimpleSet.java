@@ -20,12 +20,7 @@ public class SimpleSet<T> implements Set<T> {
 
     @Override
     public boolean contains(T value) {
-        boolean result = false;
-        if (set.equals(value)) {
-            result = true;
-
-        }
-        return result;
+       return set.equals(value);
     }
 
     @Override
