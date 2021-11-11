@@ -4,7 +4,6 @@ import ru.job4j.list.SimpleArrayList;
 
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.ListIterator;
 
 public class SimpleSet<T> implements Set<T> {
 
