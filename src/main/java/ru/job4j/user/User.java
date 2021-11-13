@@ -3,9 +3,9 @@ package ru.job4j.user;
 import java.util.*;
 
 public class User {
-    private String name;
-    private int children;
-    private Date birthday;
+    private final String name;
+    private final int children;
+    private final Date birthday;
 
     public User(String name, int children, Calendar birthday) {
         this.name = name;
@@ -41,15 +41,15 @@ public class User {
 
     public static void main(String[] args) {
         Map<User, Object> map = new HashMap<>();
-        User user = new User("Dastan", 2, new GregorianCalendar(2021, 3, 23));
-        User user1 = new User("Ivan", 3, new GregorianCalendar(2022, 4, 27));
-        User user2 = new User("Dania", 1, new GregorianCalendar(2024, 1, 20));
+        User user = new User("Dastan", 2, new GregorianCalendar(2021, Calendar.APRIL, 23));
+        User user1 = new User("Ivan", 3, new GregorianCalendar(2022, Calendar.MAY, 27));
+        User user2 = new User("Dania", 1, new GregorianCalendar(2024, Calendar.FEBRUARY, 20));
         map.put(user, "first");
         map.put(user1, "second");
         map.put(user2, "third");
         System.out.println(map);
 
-        User user3 = new User("Dastan", 2, new GregorianCalendar(2021, 3, 23));
+        User user3 = new User("Dastan", 2, new GregorianCalendar(2021, Calendar.APRIL, 23));
         map.put(user3, "first");
         boolean result = map.containsKey(user3);
         System.out.println("result : " + result);
