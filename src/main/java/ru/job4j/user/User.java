@@ -22,22 +22,22 @@ public class User {
                 + '}';
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) {
-//            return true;
-//        }
-//        if (o == null || getClass() != o.getClass()) {
-//            return false;
-//        }
-//        User user = (User) o;
-//        return children == user.children && Objects.equals(name, user.name) && Objects.equals(birthday, user.birthday);
-//    }
-
     @Override
-    public int hashCode() {
-        return Objects.hash(name, children, birthday);
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return children == user.children && Objects.equals(name, user.name) && Objects.equals(birthday, user.birthday);
     }
+
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(name, children, birthday);
+//    }
 
     public static void main(String[] args) {
         Map<User, Object> map = new HashMap<>();
@@ -51,8 +51,8 @@ public class User {
 
         User user3 = new User("Dastan", 2, new GregorianCalendar(2021, 3, 23));
         map.put(user3, "first");
-        boolean result = map.containsKey(user3);
-        System.out.println("result : " + result);
+//        boolean result = map.containsKey(user3);
+//        System.out.println("result : " + result);
         System.out.println(user.equals(user3));
         System.out.println(user.hashCode());
         System.out.println(user3.hashCode());
