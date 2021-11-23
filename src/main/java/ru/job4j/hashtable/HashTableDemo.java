@@ -13,28 +13,21 @@ public class HashTableDemo<K, V> {
 
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
-    public void put(K key, V value) {
-        int index = indexFor(hash(key.hashCode()));
-        MapEntry<K, V> newEntry = new MapEntry(key, value, null);
-        if (table[index] == null) {
-            table[index] = newEntry;
-            size++;
-            modCount++;
-        } else {
-            MapEntry<K, V> previousNode = null;
-            MapEntry<K, V> currentNode = table[index];
-            while (currentNode != null) {
-                if (currentNode.getKey().equals(key)) {
-                    currentNode.setValue(value);
-                    break;
-                }
-                previousNode = currentNode;
-                currentNode = currentNode.getNext();
-            }
-            if (previousNode != null) {
-                previousNode.setNext(newEntry);
-            }
+    public boolean put(K key, V value) {
+        int realLoadFactor = size / capacity;
+        if (realLoadFactor >= LOAD_FACTOR) {
+            expand();
         }
+            int index = indexFor(hash(key.hashCode()));
+            MapEntry<K, V> newEntry = new MapEntry(key, value, null);
+            if (table[index] == null) {
+                table[index] = newEntry;
+                size++;
+                modCount++;
+                return true;
+            }
+            return false;
+
     }
 
     private int hash(int hashCode) {
@@ -43,14 +36,11 @@ public class HashTableDemo<K, V> {
     }
 
     private int indexFor(int hash) {
-        return hash & (table.length - 1);
+        return hash & (capacity - 1);
     }
 
     private void expand() {
         MapEntry<K, V>[] newTable = new MapEntry[2 * capacity];
-        rehash(newTable);
-    }
-    private void rehash(MapEntry<K, V>[] newTable) {
         List<MapEntry<K, V>> list = new ArrayList<>();
         for (int i = 0; i < table.length; i++) {
             if (table[i] == null) {
@@ -61,11 +51,10 @@ public class HashTableDemo<K, V> {
                 size = 0;
                 capacity = 2 * capacity;
                 table = newTable;
-                for (MapEntry<K, V> oldEntry : table) {
+                for (MapEntry<K, V> oldEntry : newTable) {
                     if (oldEntry != null) {
                         oldEntry.next = null;
                     }
-                    assert oldEntry != null;
                     put(oldEntry.getKey(), oldEntry.getValue());
                 }
             }
@@ -85,12 +74,8 @@ public class HashTableDemo<K, V> {
         V value = null;
         int index = indexFor(hash(key.hashCode()));
         MapEntry<K, V> entry = table[index];
-        while (entry != null) {
-            if (entry.getKey().equals(key)) {
-                value = entry.getValue();
-                break;
-            }
-            entry = entry.getNext();
+        if (entry.getKey().equals(key)) {
+            value = entry.getValue();
         }
         return value;
     }
@@ -98,28 +83,14 @@ public class HashTableDemo<K, V> {
 
     public boolean remove(K key) {
         int index = indexFor(hash(key.hashCode()));
-        if (table[index] == null) {
-            return false;
-        } else {
-            MapEntry<K, V> previous = null;
-            MapEntry<K, V> current = table[index];
-            while (current != null) {
-                if (current.key.equals(key)) {
-                    if (previous == null) {
-                        table[index] = table[index].next;
-                        return true;
-                    } else {
-                        previous.next = current.next;
-                        return true;
-                    }
-                }
-                previous = current;
-                current = current.next;
-            }
-            return false;
-        }
-    }
+        MapEntry<K, V> current = table[index];
+        if (current.key.equals(key)) {
+            table[index] = null;
 
+            return true;
+        }
+        return false;
+    }
 
     public Iterator<K> iterator() {
         return new Iterator<K>() {
@@ -128,7 +99,13 @@ public class HashTableDemo<K, V> {
 
             @Override
             public boolean hasNext() {
-                return point < table.length;
+                for (MapEntry<K, V> elements : table) {
+                    if (elements != null) {
+                        point++;
+                        break;
+                    }
+                }
+                return point < size;
             }
 
             @Override
