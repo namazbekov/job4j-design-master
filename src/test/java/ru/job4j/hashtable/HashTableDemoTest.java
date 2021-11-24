@@ -72,4 +72,18 @@ public class HashTableDemoTest {
         map.put("two", 2);
         it.next();
     }
+    @Test
+    public void whenSimpleAddEightNine() {
+        HashTableDemo<String, Integer> table = new HashTableDemo<>();
+        table.put("Dastan", 12);
+        table.put("Ivan", 3);
+        table.put("Sasha", 600);
+        table.put("Dastan", 12);
+        table.put("Ivan", 3);
+        table.put("Sasha", 600);
+        table.put("Dastan", 12);
+        table.put("Ivan", 3);
+        table.put("Sasha", 600);
+
+    }
 }

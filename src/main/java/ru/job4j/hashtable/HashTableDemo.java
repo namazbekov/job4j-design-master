@@ -14,8 +14,7 @@ public class HashTableDemo<K, V> {
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
     public boolean put(K key, V value) {
-        int realLoadFactor = size / capacity;
-        if (realLoadFactor >= LOAD_FACTOR) {
+        if (size >= capacity * LOAD_FACTOR) {
             expand();
         }
             int index = indexFor(hash(key.hashCode()));
@@ -40,32 +39,16 @@ public class HashTableDemo<K, V> {
     }
 
     private void expand() {
-        MapEntry<K, V>[] newTable = new MapEntry[2 * capacity];
-        List<MapEntry<K, V>> list = new ArrayList<>();
-        for (int i = 0; i < table.length; i++) {
-            if (table[i] == null) {
-                continue;
+        MapEntry<K, V>[] oldTable = table;
+        size = 0;
+        modCount = 0;
+        table = new MapEntry[capacity * 2];
+        for (MapEntry<K, V> elements : oldTable) {
+            if (elements != null) {
+                put(elements.key, elements.value);
+                size++;
+                modCount++;
             }
-            findEntryByNext(table[i], list);
-            if (list.size() > 0) {
-                size = 0;
-                capacity = 2 * capacity;
-                table = newTable;
-                for (MapEntry<K, V> oldEntry : newTable) {
-                    if (oldEntry != null) {
-                        oldEntry.next = null;
-                    }
-                    put(oldEntry.getKey(), oldEntry.getValue());
-                }
-            }
-        }
-    }
-    private void findEntryByNext(MapEntry<K, V> entry, List<MapEntry<K, V>> list) {
-        if (entry != null && entry.next != null) {
-            list.add(entry);
-            findEntryByNext(entry.next, list);
-        } else {
-            list.add(entry);
         }
     }
 
@@ -125,12 +108,10 @@ public class HashTableDemo<K, V> {
 
         K key;
         V value;
-        MapEntry<K, V> next;
 
         public MapEntry(K key, V value, MapEntry<K, V> next) {
             this.key = key;
             this.value = value;
-            this.next = next;
         }
 
         public K getKey() {
@@ -143,14 +124,6 @@ public class HashTableDemo<K, V> {
 
         public void setValue(V value) {
             this.value = value;
-        }
-
-        public MapEntry<K, V> getNext() {
-            return next;
-        }
-
-        public void setNext(MapEntry<K, V> next) {
-            this.next = next;
         }
     }
 
