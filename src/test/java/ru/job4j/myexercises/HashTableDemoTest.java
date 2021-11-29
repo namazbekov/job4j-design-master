@@ -1,4 +1,4 @@
-package ru.job4j.hashtable;
+package ru.job4j.myexercises;
 
 import org.junit.Test;
 import ru.job4j.map.Map;
@@ -6,9 +6,7 @@ import ru.job4j.map.SimpleMap;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.List;
 
-import static org.hamcrest.Matchers.describedAs;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 

@@ -1,4 +1,4 @@
-package ru.job4j.hashtable;
+package ru.job4j.myexercises;
 
 import java.util.*;
 
@@ -14,6 +14,7 @@ public class HashTableDemo<K, V> {
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
     public boolean put(K key, V value) {
+        boolean result = false;
         if (size >= capacity * LOAD_FACTOR) {
             expand();
         }
@@ -23,9 +24,9 @@ public class HashTableDemo<K, V> {
                 table[index] = newEntry;
                 size++;
                 modCount++;
-                return true;
+                result = true;
             }
-            return false;
+            return result;
 
     }
 
@@ -40,9 +41,10 @@ public class HashTableDemo<K, V> {
 
     private void expand() {
         MapEntry<K, V>[] oldTable = table;
+        capacity = 16;
         size = 0;
         modCount = 0;
-        table = new MapEntry[capacity * 2];
+        table = new MapEntry[capacity];
         for (MapEntry<K, V> elements : oldTable) {
             if (elements != null) {
                 put(elements.key, elements.value);
@@ -65,14 +67,14 @@ public class HashTableDemo<K, V> {
 
 
     public boolean remove(K key) {
+        boolean result = false;
         int index = indexFor(hash(key.hashCode()));
         MapEntry<K, V> current = table[index];
         if (current.key.equals(key)) {
             table[index] = null;
-
-            return true;
+            result = true;
         }
-        return false;
+        return result;
     }
 
     public Iterator<K> iterator() {
@@ -82,12 +84,10 @@ public class HashTableDemo<K, V> {
 
             @Override
             public boolean hasNext() {
-                for (MapEntry<K, V> elements : table) {
-                    if (elements != null) {
-                        point++;
-                        break;
-                    }
+                if (currentModCount != modCount) {
+                    throw new ConcurrentModificationException();
                 }
+                point++;
                 return point < size;
             }
 
@@ -95,9 +95,6 @@ public class HashTableDemo<K, V> {
             public K next() {
                if (!hasNext()) {
                    throw new NoSuchElementException();
-               }
-               if (currentModCount != modCount) {
-                   throw new ConcurrentModificationException();
                }
                return (K) table[point++];
             }
