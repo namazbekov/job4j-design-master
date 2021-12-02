@@ -41,7 +41,7 @@ public class HashTableDemo<K, V> {
 
     private void expand() {
         MapEntry<K, V>[] oldTable = table;
-        capacity = 16;
+        capacity = capacity * 2;
         size = 0;
         modCount = 0;
         table = new MapEntry[capacity];
@@ -87,7 +87,9 @@ public class HashTableDemo<K, V> {
                 if (currentModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                point++;
+                while (point > table.length) {
+                    point++;
+                }
                 return point < size;
             }
 

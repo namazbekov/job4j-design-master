@@ -84,4 +84,14 @@ public class HashTableDemoTest {
         table.put("Sasha", 600);
 
     }
+    @Test
+    public void whenToIteratorEmpty() {
+        HashTableDemo<String, Integer> table = new HashTableDemo<>();
+        table.put("Dastan", 12);
+        table.put("Ivan", 3);
+        table.put(" ", 5);
+        Iterator<String> it = table.iterator();
+        it.hasNext();
+        it.next();
+    }
 }
