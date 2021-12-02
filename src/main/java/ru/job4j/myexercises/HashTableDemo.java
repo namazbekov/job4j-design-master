@@ -84,18 +84,23 @@ public class HashTableDemo<K, V> {
 
             @Override
             public boolean hasNext() {
+                boolean result = false;
                 if (currentModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
                 while (point > table.length) {
+                    if (table[point] != null) {
+                        result = true;
+                        break;
+                    }
                     point++;
                 }
-                return point < size;
+                return result;
             }
 
             @Override
             public K next() {
-               if (!hasNext()) {
+               if (hasNext()) {
                    throw new NoSuchElementException();
                }
                return (K) table[point++];
