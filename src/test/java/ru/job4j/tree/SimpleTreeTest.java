@@ -38,7 +38,7 @@ public class SimpleTreeTest {
         tree.add(1, 4);
         tree.add(4, 5);
         tree.add(5, 6);
-        assertTrue(tree.add(2, 6));
+        assertFalse(tree.add(2, 6));
     }
 
 }
