@@ -1,7 +1,6 @@
 package ru.job4j.myexercises;
 
 import org.junit.Test;
-import ru.job4j.map.Map;
 import ru.job4j.map.SimpleMap;
 
 import java.util.ConcurrentModificationException;
@@ -65,7 +64,7 @@ public class HashTableDemoTest {
     }
     @Test(expected = ConcurrentModificationException.class)
     public void whenCorruptedIt() {
-        Map<String, Integer> map = new SimpleMap<>();
+        SimpleMap<String, Integer> map = new SimpleMap<>();
         map.put("one", 1);
         Iterator<String> it = map.iterator();
         map.put("two", 2);

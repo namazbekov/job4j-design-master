@@ -1,60 +1,33 @@
 package ru.job4j.map;
 
-import java.util.Arrays;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
-public class SimpleMap<K, V> implements Map<K, V> {
-
+public class SimpleMap<K, V> {
     private static final float LOAD_FACTOR = 0.75f;
 
     private int capacity = 8;
 
-    private int count = 0;
+    private int size = 0;
 
     private int modCount = 0;
-    float threshold = capacity * LOAD_FACTOR;
 
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
-    @Override
     public boolean put(K key, V value) {
-      if (key == null) {
-          putForNullKey(value);
-          count++;
-          modCount++;
-          return true;
-      } else {
-          int hash = hash(key.hashCode());
-          int index = indexFor(hash);
-          MapEntry<K, V> newEntry = new MapEntry<>(key, value, null);
-          if (table[index] == null) {
-              table[index] = newEntry;
-              count++;
-              modCount++;
-          } else {
-              MapEntry<K, V> previous = null;
-              MapEntry<K, V> current = table[index];
-              while (current != null) {
-                if (current.key.equals(key)) {
-                    if (previous == null) {
-                        newEntry.next = current.next;
-                        table[index] = newEntry;
-                        return true;
-                    } else {
-                        newEntry.next = current.next;
-                        previous.next = newEntry;
-                        return true;
-                    }
-                }
-                previous = current;
-                current = current.next;
-              }
-              previous.next = newEntry;
-          }
-      }
-      return false;
+        boolean result = false;
+        if (size >= capacity * LOAD_FACTOR) {
+            expand();
+        }
+        int index = indexFor(hash(key.hashCode()));
+        MapEntry<K, V> newEntry = new MapEntry(key, value, null);
+        if (table[index] == null) {
+            table[index] = newEntry;
+            size++;
+            modCount++;
+            result = true;
+        }
+        return result;
+
     }
 
     private int hash(int hashCode) {
@@ -63,96 +36,47 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int indexFor(int hash) {
-        return hash & (table.length - 1);
-    }
-    private int hashIndex(K key) {
-        int hash = hash(key.hashCode());
-        int index = indexFor(hash);
-        return index;
-    }
-    private boolean putForNullKey(V value) {
-       MapEntry<K, V> element;
-       element = table[0];
-       if (element != null && element.getKey() == null) {
-                element.getValue();
-                element.setValue(value);
-                return true;
-           } else {
-               element.setKey(null);
-               element.setValue(value);
-               table[0] = element;
-               return true;
-           }
+        return hash & (capacity - 1);
     }
 
-    private void transfer() {
-        MapEntry<K, V>[] oldEntry = table;
-        int count = 0;
-        int newCapacity = capacity * 2;
-        table = new MapEntry[newCapacity];
-        for (MapEntry<K, V> entry : oldEntry) {
-            if (entry != null) {
-                put(entry.key, entry.value);
-                count++;
+    private void expand() {
+        MapEntry<K, V>[] oldTable = table;
+        capacity = capacity * 2;
+        size = 0;
+        modCount = 0;
+        table = new MapEntry[capacity];
+        for (MapEntry<K, V> elements : oldTable) {
+            if (elements != null) {
+                put(elements.key, elements.value);
+                size++;
                 modCount++;
             }
         }
     }
 
-    private void expand(int newCapacity) {
-        if (table.length == capacity) {
-            threshold = Integer.MAX_VALUE;
-            return;
-        }
-        MapEntry<K, V>[] newTable = new MapEntry[newCapacity];
-        transfer();
-        table = newTable;
-        threshold = newCapacity * LOAD_FACTOR;
-    }
 
-    @Override
     public V get(K key) {
-        int index = hashIndex(key);
-        if (table[index] == null) {
-            return null;
-        } else {
-            MapEntry<K, V> find = table[index];
-            while (find != null) {
-                if (find.key.equals(key)) {
-                    return find.value;
-                }
-                find = find.next;
-            }
-            return null;
+        V value = null;
+        int index = indexFor(hash(key.hashCode()));
+        MapEntry<K, V> entry = table[index];
+        if (entry.getKey().equals(key)) {
+            value = entry.getValue();
         }
+        return value;
     }
 
-    @Override
+
     public boolean remove(K key) {
-        int index = hashIndex(key);
-        if (table[index] == null) {
-            return false;
-        } else {
-            MapEntry<K, V> previous = null;
-            MapEntry<K, V> current = table[index];
-            while (current != null) {
-                if (current.key.equals(key)) {
-                    if (previous == null) {
-                        table[index] = table[index].next;
-                        return true;
-                    } else {
-                        previous.next = current.next;
-                        return true;
-                    }
-                }
-                previous = current;
-                current = current.next;
-            }
+        boolean result = false;
+        int index = indexFor(hash(key.hashCode()));
+        MapEntry<K, V> current = table[index];
+        if (current.key.equals(key)) {
+            table[index] = null;
+            result = true;
         }
-        return false;
+        return result;
     }
 
-    @Override
     public Iterator<K> iterator() {
         return new Iterator<K>() {
             private int point = 0;
@@ -160,16 +84,24 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
             @Override
             public boolean hasNext() {
-               return point < table.length;
+                boolean result = false;
+                if (currentModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                while (point < table.length) {
+                    if (table[point] != null) {
+                        result = true;
+                        break;
+                    }
+                    point++;
+                }
+                return result;
             }
 
             @Override
             public K next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
-                }
-                if (currentModCount != modCount) {
-                    throw new ConcurrentModificationException();
                 }
                 return (K) table[point++];
             }
@@ -180,20 +112,14 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
         K key;
         V value;
-        MapEntry<K, V> next;
 
         public MapEntry(K key, V value, MapEntry<K, V> next) {
             this.key = key;
             this.value = value;
-            this.next = next;
         }
 
         public K getKey() {
             return key;
-        }
-
-        public void setKey(K key) {
-            this.key = key;
         }
 
         public V getValue() {
@@ -207,11 +133,16 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public String toString() {
-        return "SimpleMap{"
-                + "capacity=" + capacity
-                + ", count=" + count
-                + ", modCount=" + modCount
-                + ", table=" + Arrays.toString(table)
-                + '}';
+        return "HashTableDemo{"
+                +
+                "capacity=" + capacity
+                +
+                ", size=" + size
+                +
+                ", modCount=" + modCount
+                +
+                ", table=" + Arrays.toString(table)
+                +
+                '}';
     }
 }
