@@ -43,13 +43,11 @@ public class SimpleMap<K, V> {
         MapEntry<K, V>[] oldTable = table;
         capacity = capacity * 2;
         size = 0;
-        modCount = 0;
         table = new MapEntry[capacity];
         for (MapEntry<K, V> elements : oldTable) {
             if (elements != null) {
                 put(elements.key, elements.value);
                 size++;
-                modCount++;
             }
         }
     }
@@ -59,8 +57,10 @@ public class SimpleMap<K, V> {
         V value = null;
         int index = indexFor(hash(key.hashCode()));
         MapEntry<K, V> entry = table[index];
-        if (entry.getKey().equals(key)) {
-            value = entry.getValue();
+        if (table[index] != null) {
+            if (entry.getKey().equals(key)) {
+                value = entry.getValue();
+            }
         }
         return value;
     }
@@ -70,9 +70,11 @@ public class SimpleMap<K, V> {
         boolean result = false;
         int index = indexFor(hash(key.hashCode()));
         MapEntry<K, V> current = table[index];
-        if (current.key.equals(key)) {
-            table[index] = null;
-            result = true;
+        if (table[index] != null) {
+            if (current.key.equals(key)) {
+                table[index] = null;
+                result = true;
+            }
         }
         return result;
     }
