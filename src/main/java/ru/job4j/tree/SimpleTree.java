@@ -33,7 +33,7 @@ public class SimpleTree<E> implements Tree<E> {
     public boolean isBinary() {
         boolean result = false;
         Optional<Node<E>> element = findByPredicateQueue(x -> x.children.size() <= 2);
-         if (element.isPresent()) {
+         if (element.get().children.size() >= 2) {
             result = true;
         }
         return result;
