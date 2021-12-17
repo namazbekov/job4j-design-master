@@ -31,12 +31,8 @@ public class SimpleTree<E> implements Tree<E> {
 
     @Override
     public boolean isBinary() {
-        boolean result = false;
         Optional<Node<E>> element = findByPredicateQueue(x -> x.children.size() > 2);
-         if (element.isEmpty()) {
-            result = true;
-        }
-        return result;
+        return element.isEmpty();
     }
     private Optional<Node<E>> findByPredicateQueue(Predicate<Node<E>> condition) {
         Optional<Node<E>> rsl = Optional.empty();
