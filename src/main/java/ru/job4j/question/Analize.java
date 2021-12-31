@@ -17,7 +17,7 @@ public class Analize {
         for (User index : current) {
             if (!prev.containsKey(index.getId())) {
                 addCount++;
-            } else if (!prev.get(index.getId()).equals(index.getName())) {
+            } else if (!Objects.equals(prev.get(index.getId()), index.getName())) {
                 changeCount++;
             }
         }
