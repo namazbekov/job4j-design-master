@@ -12,10 +12,13 @@ import java.util.stream.Stream;
 public class LogFilter {
     public static List<String> filter(String file) {
         List<String> list = new ArrayList<>();
+        String elements;
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-            list = in.lines().map(String :: toLowerCase)
-                    .filter(s -> s.startsWith("404"))
-                    .collect(Collectors.toCollection(ArrayList :: new));
+            while ((elements = in.readLine()) != null) {
+                if (elements.endsWith("^404.111.$")) {
+                    list.add(elements);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
