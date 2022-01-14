@@ -12,17 +12,13 @@ public class EvenNumberFile {
                 text.append((char) read);
             }
             String[] lines = text.toString().split(" ");
-            int[] numbers = new int[6];
-            int counter = 0;
+            int numbers;
             for (String line : lines) {
-                numbers[counter++] = Integer.parseInt(line);
-            }
-            for (int element : numbers) {
-                if (element % 2 == 0) {
-                    System.out.println(element + " - четное число");
+                numbers = Integer.parseInt(line);
+                if (numbers % 2 == 0) {
+                    System.out.println(numbers);
                 }
             }
-            System.out.println(Arrays.toString(numbers));
         } catch (Exception e) {
             e.printStackTrace();
         }
