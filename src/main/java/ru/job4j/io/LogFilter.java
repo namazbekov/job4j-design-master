@@ -25,7 +25,7 @@ public class LogFilter {
             }
             for (String value : list) {
                 String[] last = value.split(" ");
-                if (last[last.length - 2].equals("404")) {
+                if ("404".equals(last[last.length - 2])) {
                     result.add(value);
                 }
             }
