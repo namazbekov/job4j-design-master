@@ -23,11 +23,10 @@ public class LogFilter {
             while ((elements = in.readLine()) != null) {
                 list.add(elements);
             }
-            String[] string = list.toArray(new String[0]);
-            for (String value : string) {
+            for (String value : list) {
                 String[] last = value.split(" ");
                 if (last[last.length - 2].equals("404")) {
-                    result.add(Arrays.toString(last));
+                    result.add(value);
                 }
             }
         } catch (Exception e) {
@@ -38,6 +37,6 @@ public class LogFilter {
 
     public static void main(String[] args) {
         List<String> log = filter("log.txt");
-        System.out.println(log);
+        log.forEach(System.out::println);
     }
 }
