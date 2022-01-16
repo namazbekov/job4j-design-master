@@ -1,18 +1,9 @@
 package ru.job4j.io;
 
-import com.sun.jdi.request.StepRequest;
-import ru.job4j.list.SimpleArrayList;
-
-import java.awt.*;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class LogFilter {
     public static List<String> filter(String file) {
