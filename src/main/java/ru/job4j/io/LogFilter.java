@@ -17,16 +17,12 @@ import java.util.stream.Stream;
 public class LogFilter {
     public static List<String> filter(String file) {
         List<String> result = new ArrayList<>();
-        List<String> list = new ArrayList<>();
         String elements;
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
             while ((elements = in.readLine()) != null) {
-                list.add(elements);
-            }
-            for (String value : list) {
-                String[] last = value.split(" ");
+                String[] last = elements.split(" ");
                 if ("404".equals(last[last.length - 2])) {
-                    result.add(value);
+                    result.add(elements);
                 }
             }
         } catch (Exception e) {
