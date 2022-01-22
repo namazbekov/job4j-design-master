@@ -10,7 +10,7 @@ public class ConfigTest {
 
     @Test
     public void whenPairWithoutComment() {
-        String path = "././/app.properties";
+        String path = "c:\\projects\\job4j_design\\app.properties";
         Config config = new Config(path);
         config.load();
         assertThat(config.value("hibernate.dialect"), is("org.hibernate.dialect.PostgreSQLDialect"));
@@ -19,7 +19,7 @@ public class ConfigTest {
 
     @Test
     public void whenPairWithoutComment2() {
-        String path = "././/add.properties";
+        String path = "c:\\projects\\job4j_design\\add.properties";
         Config config = new Config(path);
         config.load();
         assertThat(config.value("animal"), is("animalPassword"));

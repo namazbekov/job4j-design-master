@@ -25,7 +25,6 @@ public class Config {
                     values.put(first, second);
                 }
             }
-            System.out.println(values);
         } catch (Exception e) {
             e.printStackTrace();
         }
