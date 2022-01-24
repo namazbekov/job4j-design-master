@@ -10,7 +10,7 @@ public class ConfigTest {
 
     @Test
     public void whenPairWithoutComment() {
-        String path = "./data//app.properties";
+        String path = "./data/app.properties";
         Config config = new Config(path);
         config.load();
         assertThat(config.value("something"), is(Matchers.nullValue()));
@@ -18,7 +18,7 @@ public class ConfigTest {
 
     @Test
     public void whenPairWithoutComment2() {
-        String path = "./data//add.properties";
+        String path = "./data/add.properties";
         Config config = new Config(path);
         config.load();
         try {
@@ -30,21 +30,21 @@ public class ConfigTest {
 
     @Test
     public void whenFileContainsException3() throws IllegalArgumentException {
-        String path = "./data//arr.properties";
+        String path = "./data/arr.properties";
         Config config = new Config(path);
         config.load();
     }
 
     @Test
     public void whenDontFindElement() throws NoSuchElementException {
-        String path = "./data//aff.properties";
+        String path = "./data/aff.properties";
         Config config = new Config(path);
         config.load();
     }
 
     @Test
     public void whenNoLegalElement() throws IllegalArgumentException {
-        String path = "./data//acc.properties";
+        String path = "./data/acc.properties";
         Config config = new Config(path);
         config.load();
     }
