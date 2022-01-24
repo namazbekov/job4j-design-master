@@ -14,11 +14,11 @@ public class Analizy {
                 String[] array = read.split(" ");
 
                 if ("400".equals(array[0]) || "500".equals(array[0]) && isWorks) {
-                    stringBuilder.append(array[1] + ";");
+                    stringBuilder.append(array[1]).append(";");
                     isWorks = false;
                 }
                 if ("300".equals(array[0]) || "200".equals(array[0]) && !isWorks) {
-                    stringBuilder.append(array[1] + ";");
+                    stringBuilder.append(array[1]).append(";");
                     isWorks = true;
                 }
             }
