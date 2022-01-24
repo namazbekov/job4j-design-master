@@ -2,33 +2,33 @@ package ru.job4j.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Analizy {
+    @SuppressWarnings("checkstyle:SimplifyBooleanExpression")
     public static void unavailable(String source) {
-        String numberOne = null;
-        String numberTwo = null;
         String read;
+        StringBuilder stringBuilder = new StringBuilder();
+        boolean isWorks = true;
         try (BufferedReader in = new BufferedReader(new FileReader(source))) {
             while ((read = in.readLine()) != null) {
                 String[] array = read.split(" ");
-                String first = array[0];
-                String second = array[array.length - 1];
-                if ("400".equals(first) || "500".equals(first)) {
-                    numberOne = second;
+
+                if ("400".equals(array[0]) || "500".equals(array[0]) && isWorks) {
+                    stringBuilder.append(array[1] + ";");
+                    isWorks = false;
                 }
-                if ("200".equals(first) || "300".equals(first)) {
-                    numberTwo = second;
+                if ("300".equals(array[0]) || "200".equals(array[0]) && !isWorks) {
+                    stringBuilder.append(array[1] + ";");
+                    isWorks = true;
                 }
             }
-            System.out.println(numberOne + ";" + numberTwo);
+            System.out.println(stringBuilder);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
-        Analizy.unavailable("c:\\projects\\job4j_design\\data\\server.log");
+        Analizy.unavailable("./data/server.log");
     }
 }
