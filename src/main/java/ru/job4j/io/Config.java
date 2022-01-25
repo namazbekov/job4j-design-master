@@ -22,7 +22,7 @@ public class Config {
                 if (elements.startsWith("#")) {
                     continue;
                 }
-                if (elements.split("=").length > 2) {
+                if (elements.split("=").length != 2) {
                     throw new IllegalArgumentException();
                 }
                 if (!elements.contains("=")) {

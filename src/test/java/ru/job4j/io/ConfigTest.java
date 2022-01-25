@@ -28,22 +28,22 @@ public class ConfigTest {
         }
     }
 
-    @Test
-    public void whenFileContainsException3() throws IllegalArgumentException {
+    @Test (expected = IllegalArgumentException.class)
+    public void whenFileContainsException3() {
         String path = "./data/arr.properties";
         Config config = new Config(path);
         config.load();
     }
 
-    @Test
-    public void whenDontFindElement() throws NoSuchElementException {
+    @Test (expected = NoSuchElementException.class)
+    public void whenDontFindElement() {
         String path = "./data/aff.properties";
         Config config = new Config(path);
         config.load();
     }
 
-    @Test
-    public void whenNoLegalElement() throws IllegalArgumentException {
+    @Test (expected = IllegalArgumentException.class)
+    public void whenNoLegalElement() {
         String path = "./data/acc.properties";
         Config config = new Config(path);
         config.load();
