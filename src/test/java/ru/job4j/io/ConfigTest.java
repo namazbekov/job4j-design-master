@@ -1,17 +1,32 @@
 package ru.job4j.io;
 
 import org.hamcrest.Matchers;
+import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import java.util.NoSuchElementException;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class ConfigTest {
 
+    private static Config config;
+    private static String path;
+
+    @BeforeClass
+    public static void beforeClass() {
+        config = new Config(path);
+    }
+
+    @Rule
+    public ExpectedException expect = ExpectedException.none();
+
     @Test
     public void whenPairWithoutComment() {
-        String path = "./data/app.properties";
-        Config config = new Config(path);
+        path = "./data/app.properties";
+        config = new Config(path);
         config.load();
         assertThat(config.value("something"), is(Matchers.nullValue()));
     }
@@ -19,7 +34,7 @@ public class ConfigTest {
     @Test
     public void whenPairWithoutComment2() {
         String path = "./data/add.properties";
-        Config config = new Config(path);
+        config = new Config(path);
         config.load();
         try {
             config.value("vjfnvj");
@@ -28,21 +43,22 @@ public class ConfigTest {
         }
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void whenFileContainsException3() {
         String path = "./data/arr.properties";
-        Config config = new Config(path);
+        config = new Config(path);
+        expect.expect(IllegalArgumentException.class);
+        config.load();
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void whenDontFindElement() {
+        path = "./data/aff.properties";
+        config = new Config(path);
         config.load();
     }
 
     @Test (expected = NoSuchElementException.class)
-    public void whenDontFindElement() {
-        String path = "./data/aff.properties";
-        Config config = new Config(path);
-        config.load();
-    }
-
-    @Test (expected = IllegalArgumentException.class)
     public void whenNoLegalElement() {
         String path = "./data/acc.properties";
         Config config = new Config(path);

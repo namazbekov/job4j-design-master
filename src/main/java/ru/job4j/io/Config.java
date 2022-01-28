@@ -15,7 +15,7 @@ public class Config {
         this.path = path;
     }
 
-    public void load() throws IllegalArgumentException, NoSuchElementException {
+    public void load() {
         String elements;
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             while ((elements = read.readLine()) != null) {
