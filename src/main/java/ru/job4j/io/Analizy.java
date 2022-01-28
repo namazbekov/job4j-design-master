@@ -1,11 +1,12 @@
 package ru.job4j.io;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 
 public class Analizy {
 
-    public static void unavailable(String source) {
+    public static StringBuilder unavailable(File source) {
         String read;
         StringBuilder stringBuilder = new StringBuilder();
         boolean isWorks = true;
@@ -28,9 +29,10 @@ public class Analizy {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return stringBuilder;
     }
 
     public static void main(String[] args) {
-        Analizy.unavailable("./data/server.log");
+        Analizy.unavailable(new File("./data/server.log"));
     }
 }
