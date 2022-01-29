@@ -34,7 +34,9 @@ public class AnalizyTest {
         try (BufferedReader in = new BufferedReader(new FileReader(target))) {
             in.lines().forEach(rsl::append);
         }
-        Assert.assertThat(rsl.toString(), is("10:58:01;10:59:01;\r\n"
-                + "11:01:02;11:02:02;\r\n"));
+        Assert.assertThat(rsl.toString(), is("""
+                10:58:01;10:59:01;\r
+                11:01:02;11:02:02;\r
+                """));
     }
 }
