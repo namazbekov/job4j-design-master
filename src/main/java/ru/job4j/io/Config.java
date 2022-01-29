@@ -2,6 +2,7 @@ package ru.job4j.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -19,22 +20,21 @@ public class Config {
         String elements;
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             while ((elements = read.readLine()) != null) {
-                if (elements.startsWith("#")) {
+                String value = elements.trim();
+                if (value.startsWith("#")) {
                     continue;
                 }
-                if (elements.split("=").length != 2) {
+                if (" ".equals(value)) {
+                    continue;
+                }
+                if ("=".equals(value)) {
+                    String[] array = elements.split("=");
+                    values.put(array[0], array[array.length - 1]);
+                } else {
                     throw new IllegalArgumentException();
                 }
-                if (!elements.contains("=")) {
-                    throw new NoSuchElementException();
-                }
-                String[] array = elements.split("=");
-                if (" ".equals(array[0]) || " ".equals(array[array.length - 1])) {
-                    throw new IllegalArgumentException();
-                }
-                values.put(array[0], array[array.length - 1]);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

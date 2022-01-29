@@ -23,7 +23,7 @@ public class ConfigTest {
     @Rule
     public ExpectedException expect = ExpectedException.none();
 
-    @Test
+    @Test (expected = IllegalArgumentException.class)
     public void whenPairWithoutComment() {
         path = "./data/app.properties";
         config = new Config(path);
@@ -31,16 +31,12 @@ public class ConfigTest {
         assertThat(config.value("something"), is(Matchers.nullValue()));
     }
 
-    @Test
+    @Test (expected = IllegalArgumentException.class)
     public void whenPairWithoutComment2() {
         String path = "./data/add.properties";
         config = new Config(path);
         config.load();
-        try {
-            config.value("vjfnvj");
-        } catch (NoSuchElementException e) {
-            System.out.println("Нет такого ключа");
-        }
+        config.value("oajdnvij");
     }
 
     @Test
@@ -58,7 +54,7 @@ public class ConfigTest {
         config.load();
     }
 
-    @Test (expected = NoSuchElementException.class)
+    @Test (expected = IllegalArgumentException.class)
     public void whenNoLegalElement() {
         String path = "./data/acc.properties";
         Config config = new Config(path);
