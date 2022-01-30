@@ -5,6 +5,9 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import java.util.NoSuchElementException;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -21,15 +24,15 @@ public class ConfigTest {
     @Rule
     public ExpectedException expect = ExpectedException.none();
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test (expected = NoSuchElementException.class)
     public void whenPairWithoutComment() {
         path = "./data/app.properties";
         config = new Config(path);
         config.load();
-        assertThat(config.value("something"), is(Matchers.nullValue()));
+        config.value("something");
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test (expected = NoSuchElementException.class)
     public void whenPairWithoutComment2() {
         String path = "./data/add.properties";
         config = new Config(path);

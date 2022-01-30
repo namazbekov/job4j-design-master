@@ -39,10 +39,12 @@ public class Config {
         }
     }
 
-    public String value(String key) throws NoSuchElementException {
-        String element = null;
+    public String value(String key) {
+        String element;
         if (values.containsKey(key)) {
             element = values.get(key);
+        } else {
+            throw new NoSuchElementException();
         }
         return element;
     }
