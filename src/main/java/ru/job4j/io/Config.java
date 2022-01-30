@@ -27,12 +27,12 @@ public class Config {
                 if (value.isEmpty()) {
                     continue;
                 }
-                if (value.contains("=") && !value.startsWith("=") && value.split("=").length == 2) {
-                    String[] array = elements.split("=");
-                    values.put(array[0], array[array.length - 1]);
-                } else {
+                if (!value.contains("=") || value.startsWith("=") || value.split("=").length != 2) {
                     throw new IllegalArgumentException();
                 }
+                String[] array = value.split("=");
+                values.put(array[0], array[array.length - 1]);
+
             }
         } catch (IOException e) {
             e.printStackTrace();

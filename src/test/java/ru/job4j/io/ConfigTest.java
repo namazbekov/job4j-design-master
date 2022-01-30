@@ -1,15 +1,11 @@
 package ru.job4j.io;
 
-import org.hamcrest.Matchers;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
 import java.util.NoSuchElementException;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
 public class ConfigTest {
 
