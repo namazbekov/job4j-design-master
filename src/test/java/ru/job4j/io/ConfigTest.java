@@ -5,8 +5,6 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import java.util.NoSuchElementException;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -57,6 +55,12 @@ public class ConfigTest {
     @Test (expected = IllegalArgumentException.class)
     public void whenNoLegalElement() {
         String path = "./data/acc.properties";
+        Config config = new Config(path);
+        config.load();
+    }
+    @Test (expected = IllegalArgumentException.class)
+    public void whenHaveTwoEquals() {
+        String path = "./data/akk.properties";
         Config config = new Config(path);
         config.load();
     }

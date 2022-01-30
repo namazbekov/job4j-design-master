@@ -24,10 +24,10 @@ public class Config {
                 if (value.startsWith("#")) {
                     continue;
                 }
-                if (" ".equals(value)) {
+                if (value.isEmpty()) {
                     continue;
                 }
-                if ("=".equals(value)) {
+                if (value.contains("=") && !value.startsWith("=") && value.split("=").length == 2) {
                     String[] array = elements.split("=");
                     values.put(array[0], array[array.length - 1]);
                 } else {
