@@ -10,32 +10,27 @@ import java.util.*;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     HashMap<FileProperty, List<Path>> map = new HashMap<>();
-    List<Path> list = new ArrayList<>();
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        collectDuplicateFiles(file);
+        FileProperty fileProperty = new FileProperty(Files.size(file), file.getFileName().toString());
+        if (map.containsKey(fileProperty)) {
+            map.get(fileProperty).add(file);
+        } else {
+            List<Path> list = new ArrayList<>();
+            list.add(file);
+            map.put(fileProperty, list);
+        }
         return super.visitFile(file, attrs);
     }
 
-    private void collectDuplicateFiles(Path file) throws IOException {
-        FileProperty duplicate = new FileProperty(Files.size(file), file.getFileName().toString());
-        list.add(file.toAbsolutePath());
-        map.put(duplicate, list);
-        if (!map.containsKey(duplicate)) {
-            List<Path> originalFile = new ArrayList<>();
-            originalFile.add(file.toAbsolutePath());
-            map.put(duplicate, originalFile);
-        } else {
-            list.add(file.toAbsolutePath());
+    public List<Path> getDuplicateFiles() {
+        List<Path> list = new ArrayList<>();
+        for (Map.Entry<FileProperty, List<Path>> collect : map.entrySet()) {
+            if (collect.getValue().size() > 1) {
+                list.addAll(collect.getValue());
+            }
         }
-    }
-
-    public void printDuplicateFiles() {
-        Set<Map.Entry<FileProperty, List<Path>>> set = map.entrySet();
-        for (Map.Entry<FileProperty, List<Path>> collect : set) {
-            if (list.size() > 1)
-            System.out.println(collect.getKey().getName() + " - " + collect.getValue());
-        }
+        return list;
     }
 }
