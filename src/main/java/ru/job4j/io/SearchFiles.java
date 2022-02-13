@@ -14,7 +14,6 @@ import static java.nio.file.FileVisitResult.CONTINUE;
 public class SearchFiles implements FileVisitor<Path> {
     List<Path> list = new ArrayList<>();
     Predicate<Path> condition;
-    String extension;
 
     public SearchFiles(Predicate<Path> condition) {
         this.condition = condition;
