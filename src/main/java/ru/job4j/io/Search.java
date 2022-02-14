@@ -14,18 +14,15 @@ public class Search {
         if (args.length != 2) {
             throw new IllegalArgumentException("Root is null");
         }
-        if (args[args.length - 1] == null) {
-            throw new NoSuchObjectException("Please, enter extension");
-        }
         File file = new File(args[0]);
-        if (!file.exists()) {
-            throw new IllegalArgumentException("Directory is empty");
+        if (!file.isDirectory()) {
+            throw new IllegalArgumentException("It is not directory");
         }
-        if (!args[args.length - 1].startsWith(".txt")) {
+        if (!args[1].startsWith(".")) {
             throw new NoSuchObjectException("no such extension");
         }
             Path start = Paths.get(args[0]);
-            search(start, p -> p.toFile().getName().endsWith(args[args.length - 1])).forEach(System.out::println);
+            search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
 
     }
 
