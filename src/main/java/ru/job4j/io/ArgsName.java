@@ -7,7 +7,15 @@ public class ArgsName {
 
     private final Map<String, String> values = new HashMap<>();
 
+    public boolean checkElements(String[] args) {
+        boolean result = args[1].isEmpty();
+        return result;
+    }
+
     public String get(String key) {
+        if (!values.containsKey(key)) {
+            throw new IllegalArgumentException("no such key");
+        }
         return values.get(key);
     }
 
@@ -18,8 +26,8 @@ public class ArgsName {
         for (String array : args) {
             String element = array.substring(1);
             String[] arrayArgs = element.split("=", 2);
-            if (arrayArgs[1].isEmpty()) {
-                throw new IllegalArgumentException("Element don`t have value");
+            if (checkElements(arrayArgs)) {
+                throw new IllegalArgumentException("Key don`t have value");
             }
             values.put(arrayArgs[0], arrayArgs[1]);
         }
