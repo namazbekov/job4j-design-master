@@ -8,8 +8,7 @@ public class ArgsName {
     private final Map<String, String> values = new HashMap<>();
 
     public boolean checkElements(String[] args) {
-        boolean result = args[1].isEmpty();
-        return result;
+        return args[1].isEmpty();
     }
 
     public String get(String key) {
