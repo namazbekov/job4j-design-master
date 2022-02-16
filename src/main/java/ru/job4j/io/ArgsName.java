@@ -7,7 +7,7 @@ public class ArgsName {
 
     private final Map<String, String> values = new HashMap<>();
 
-    public boolean checkElements(String[] args) {
+    private boolean checkElements(String[] args) {
         return args[1].isEmpty();
     }
 
@@ -23,6 +23,9 @@ public class ArgsName {
             throw new IllegalArgumentException("Array don`t have elements");
         }
         for (String array : args) {
+            if (!array.startsWith("-")) {
+                throw new IllegalArgumentException("no such - ");
+            }
             String element = array.substring(1);
             String[] arrayArgs = element.split("=", 2);
             if (checkElements(arrayArgs)) {
