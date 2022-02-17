@@ -38,7 +38,7 @@ public class Zip {
         Path source = Path.of(name.get("d"));
         String targetName = name.get("o");
         String character = name.get("e");
-        List<Path> sources = Search.search(source, s -> s.toFile().getName().endsWith(character));
+        List<Path> sources = Search.search(source, s -> !s.toFile().getName().endsWith(character));
         File target = new File(targetName);
         packFiles(sources, target);
     }
