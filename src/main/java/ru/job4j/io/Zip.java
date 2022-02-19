@@ -22,22 +22,18 @@ public class Zip {
 
     }
 
-    public void packSingleFile(File source, File target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            zip.putNextEntry(new ZipEntry(source.getPath()));
-            try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
-                zip.write(out.readAllBytes());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void main(String[] args) throws IOException {
         ArgsName name = ArgsName.of(args);
         Path source = Path.of(name.get("d"));
         String targetName = name.get("o");
         String character = name.get("e");
+        File directory = source.toFile();
+        if (!directory.isDirectory()) {
+            throw new IllegalArgumentException("no such that directory");
+        }
+        if (!character.startsWith(".")) {
+            throw new IllegalArgumentException("your extension have to start with point");
+        }
         List<Path> sources = Search.search(source, s -> !s.toFile().getName().endsWith(character));
         File target = new File(targetName);
         packFiles(sources, target);
