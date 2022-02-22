@@ -1,7 +1,6 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -20,12 +19,12 @@ public class ConsoleChat {
     public void run() {
         List<String> log = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
-            String yourString = null;
+            List<String> answer = readPhrases();
+            Random random = new Random();
+            String yourString;
             boolean status = true;
             System.out.println("Enter someThing :");
-            while (!(OUT).equals(yourString)) {
-                yourString = br.readLine();
-                log.add(yourString);
+            while (!(OUT).equals(yourString = br.readLine())) {
                 if ((STOP).equals(yourString)) {
                     status = false;
                 }
@@ -33,14 +32,13 @@ public class ConsoleChat {
                     status = true;
                 }
                 if (status) {
-                    List<String> answer = readPhrases();
-                    Random random = new Random();
                     String randomElement = answer.get(random.nextInt(answer.size()));
                     log.add(randomElement);
                     System.out.println("ответ на запрос :" + randomElement);
                 }
+                log.add(yourString);
+                saveLog(log);
             }
-            saveLog(log);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,7 +47,7 @@ public class ConsoleChat {
     private List<String> readPhrases() {
         List<String> list = new ArrayList<>();
         String phrases;
-        try (BufferedReader br = new BufferedReader(new FileReader(source))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(botAnswers))) {
             while ((phrases = br.readLine()) != null) {
                 list.add(phrases);
             }
@@ -68,7 +66,7 @@ public class ConsoleChat {
     }
 
     public static void main(String[] args) throws IOException {
-        ConsoleChat cc = new ConsoleChat("./data/text1.txt", "");
+        ConsoleChat cc = new ConsoleChat("./data/text2.txt", "./data/text1.txt");
         cc.run();
     }
 }
