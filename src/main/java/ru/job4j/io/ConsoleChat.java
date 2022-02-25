@@ -32,11 +32,11 @@ public class ConsoleChat {
                     status = true;
                 }
                 if (status) {
+                    log.add(yourString);
                     String randomElement = answer.get(random.nextInt(answer.size()));
                     log.add(randomElement);
                     System.out.println("ответ на запрос :" + randomElement);
                 }
-                log.add(yourString);
                 saveLog(log);
             }
         } catch (IOException e) {
