@@ -18,13 +18,14 @@ public class ConsoleChat {
 
     public void run() {
         List<String> log = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+        boolean status = true;
+        try (Scanner scanner = new Scanner(System.in)) {
             List<String> answer = readPhrases();
             Random random = new Random();
-            String yourString;
-            boolean status = true;
+            String yourString = null;
             System.out.println("Enter someThing :");
-            while (!(OUT).equals(yourString = br.readLine())) {
+            while (!(OUT).equals(yourString)) {
+                yourString = scanner.nextLine();
                 if ((STOP).equals(yourString)) {
                     status = false;
                 }
@@ -38,9 +39,8 @@ public class ConsoleChat {
                     System.out.println("ответ на запрос :" + randomElement);
                 }
                 saveLog(log);
+
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
