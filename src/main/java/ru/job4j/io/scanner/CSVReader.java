@@ -16,7 +16,7 @@ public class CSVReader {
         String out = argsName.get("out");
         int indexName = 0;
         int indexAge = 0;
-        try(Scanner scanner = new Scanner(new File(path))) {
+        try (Scanner scanner = new Scanner(new File(path))) {
             String firstRow = scanner.nextLine();
             List<String> list = List.of(firstRow.split(";"));
             if (list.contains(filter[0]) && list.contains(filter[1])) {
