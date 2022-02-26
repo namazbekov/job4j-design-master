@@ -25,21 +25,20 @@ public class ConsoleChat {
             String yourString = null;
             System.out.println("Enter someThing :");
             while (!(OUT).equals(yourString)) {
-                yourString = scanner.nextLine();
+                yourString = scanner.next();
                 if ((STOP).equals(yourString)) {
                     status = false;
                 }
                 if ((CONTINUE).equals(yourString)) {
                     status = true;
                 }
-                if (status) {
+                if (status && !OUT.equals(yourString)) {
                     log.add(yourString);
                     String randomElement = answer.get(random.nextInt(answer.size()));
                     log.add(randomElement);
                     System.out.println("ответ на запрос :" + randomElement);
                 }
                 saveLog(log);
-
             }
         }
     }
