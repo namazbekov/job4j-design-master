@@ -38,6 +38,7 @@ public class ConsoleChat {
                     log.add(randomElement);
                     System.out.println("ответ на запрос :" + randomElement);
                 }
+                log.add(yourString);
                 saveLog(log);
             }
         }
