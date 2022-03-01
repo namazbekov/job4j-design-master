@@ -27,7 +27,7 @@ public class CSVReader {
             while (scanner.hasNextLine()) {
                 String nextLine = scanner.nextLine();
                 List<String> list1 = List.of(nextLine.split(delimiter));
-                for (int i = 0; i < list1.size(); i ++) {
+                for (int i = 0; i < list1.size(); i++) {
                     for (int j = 0; j < collectIndex.size(); j++) {
                         int element = Integer.parseInt(collectIndex.get(j));
                         if (i == element) {
