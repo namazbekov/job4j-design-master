@@ -16,13 +16,15 @@ public class EchoServer {
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     String[] array = in.readLine().split("=");
                     List<String> list = List.of(array[1].split(" "));
-                    for (String s : array) {
-                        if (list.contains("Bye")) {
-                            server.close();
-                            System.out.println("Close program");
-                            break;
-                        }
-                        System.out.println(s);
+                    if (list.contains("Hello")) {
+                        System.out.println("user = Hello");
+                    }
+                    if (list.contains("Exit")) {
+                        server.close();
+                        System.out.println("Close program");
+                    }
+                    if (!list.isEmpty()) {
+                        System.out.println("Bot = " + list.get(0));
                     }
                     out.flush();
                 }
