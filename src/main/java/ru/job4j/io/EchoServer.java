@@ -3,7 +3,6 @@ package ru.job4j.io;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Collections;
 import java.util.List;
 
 public class EchoServer {
@@ -15,23 +14,18 @@ public class EchoServer {
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
-                    String input = in.readLine();
-                    String[] array = input.split("=");
-                    List<String> word = List.of(array[1].split(" "));
-                    String string = word.get(0);
-                    if ("Hello".equals(string)) {
-                        System.out.println("Hello my friend");
-                    }
-                    if ("Exit".equals(string)) {
-                        server.close();
-                        System.out.println("The end");
-                    }
-                    if (!"Hello".equals(string) && !"Exit".equals(string)) {
-                        System.out.println(string);
+                    String str = in.readLine();
+                    if (str != null && !str.isEmpty()) {
+                        String[] array = str.split("=");
+                        List<String> list = List.of(array[array.length - 1].split(" "));
+                        if (list.contains("Bye")) {
+                            System.out.println("Good Bye");
+                            server.close();
+                        }
+                        System.out.println(list.get(0));
                     }
                     out.flush();
                 }
-
             }
         }
     }
