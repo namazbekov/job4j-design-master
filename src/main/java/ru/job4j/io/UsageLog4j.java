@@ -19,6 +19,6 @@ public class UsageLog4j {
         boolean bul = true;
         LOG.debug("Test -> byte : {}, age : {}, long : {}"
                         + ", char : {}, short : {}, float : {}, double : {}, boolean : {}"
-                , b, age, l, c, s, f, d, bul);
+                ,b , age, l, c, s, f, d, bul);
     }
 }
