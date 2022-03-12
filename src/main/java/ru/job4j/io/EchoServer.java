@@ -25,7 +25,7 @@ public class EchoServer {
                         } else if (list.contains("Exit")) {
                             System.out.println("Good Bye");
                             server.close();
-                        }else {
+                        } else {
                             System.out.println(list.get(0));
                         }
                     }
