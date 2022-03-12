@@ -17,8 +17,8 @@ public class UsageLog4j {
         float f = 1.2f;
         double d = 342.5;
         boolean bul = true;
-        LOG.debug("Test -> byte : {}, age : {}, long : {}" +
-                ", char : {}, short : {}, float : {}, double : {}, boolean : {}"
+        LOG.debug("Test -> byte : {}, age : {}, long : {}"
+                        + ", char : {}, short : {}, float : {}, double : {}, boolean : {}"
                 , b, age, l, c, s, f, d, bul);
     }
 }
