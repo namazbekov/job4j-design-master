@@ -8,7 +8,6 @@ public class UsageLog4j {
     private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
 
     public static void main(String[] args) {
-
         int age = 33;
         byte b = 4;
         long l = 101029L;
@@ -18,7 +17,7 @@ public class UsageLog4j {
         double d = 342.5;
         boolean bul = true;
         LOG.debug("Test -> byte : {}, age : {}, long : {}"
-                        + ", char : {}, short : {}, float : {}, double : {}, boolean : {}"
-                ,b , age, l, c, s, f, d, bul);
+                        + ", char : {}, short : {}, float : {}, double : {}"
+                + ", boolean : {}", b, age, l, c, s, f, d, bul);
     }
 }
