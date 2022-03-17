@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<User online="false" age="33" name="Dany">
+    <computer lenova="129-zkmc"/>
+    <locations>
+        <location>Bishkek</location>
+        <location>Moscow</location>
+    </locations>
+</User>
