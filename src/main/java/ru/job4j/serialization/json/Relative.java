@@ -9,6 +9,14 @@ public class Relative {
         this.sisters = sisters;
     }
 
+    public String getBrothers() {
+        return brothers;
+    }
+
+    public String getSisters() {
+        return sisters;
+    }
+
     @Override
     public String toString() {
         return "{" + "brothers='" + brothers + '\''
