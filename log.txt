@@ -1,0 +1,10 @@
+.\data\404.txt
+.\data\even.txt
+.\data\filter.csv
+.\data\filter2.csv
+.\data\input.txt
+.\data\log.txt
+.\data\server.log
+.\data\text.txt
+.\data\text1.txt
+.\data\text2.txt
