@@ -49,7 +49,7 @@ public class SearchFile {
        }
     }
 
-    public static void check(String[] args) {
+    private static void check(String[] args) {
         ArgsName argsName = ArgsName.of(args);
         Path source = Path.of(argsName.get("d"));
         String character = argsName.get("n");
