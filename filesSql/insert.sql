@@ -1,5 +1,5 @@
-insert into users (name) values ('Oleg');
-insert into roles (name, user_id) values('admin' , 1);
+insert into roles (name) values('admin');
+insert into users (name, roles_id) values ('Oleg', 1);
 insert into rules (name) values ('delete\comments\deleteUsers\deleteItems');
 insert into roles_rules(rule_id, role_id) values (1, 1);
 insert into item (name, user_id) values ('заявка', 1);

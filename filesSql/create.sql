@@ -1,11 +1,11 @@
+create table roles (
+	id serial primary key,
+	name varchar(255),
+);
 create table users (
 	id serial primary key,
 	name varchar(255),
 	roles_id int references roles(id)
-);
-create table roles (
-	id serial primary key,
-	name varchar(255),
 );
 create table rules(
 	id serial primary key,
