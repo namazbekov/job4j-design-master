@@ -23,10 +23,10 @@ insert into devices_people (devices_id, people_id) values (2, 2), (2, 2), (2, 2)
 insert into devices_people (devices_id, people_id) values (1, 3), (1, 3), (1, 3);
 select * from devices_people
 
-select p.name, dp.devices_id, avg(d.price)
-from devices as d
-join devices_people as dp
-on d.id = dp.devices_id
+select p.name, avg(d.price)
+from devices_people
+join devices as d
+on d.id = devices_id
 join people as p
-on p.id = dp.people_id
-group by p.name, dp.devices_id
+on p.id = people_id
+group by p.name
