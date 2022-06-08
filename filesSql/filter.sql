@@ -36,11 +36,12 @@ values ('Хохольское молоко', 3, date '23-06-2022', 80);
 select * from product 
 join type t on product.type_id = t.id where t.name = 'Сыр';
 
-select * from product where name like 'мороженное';
+select * from product where name like '%ороженно%';
 
-select expried_date < '08-06-2022' from product;
+select expried_date < current_date from product;
 
-select max(price) from product;
+select name, max(price) from product
+group by name;
 
 select * from product 
 join type t on product.type_id = t.id
