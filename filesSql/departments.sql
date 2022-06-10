@@ -18,10 +18,10 @@ insert into employees (name, departments_id) values ('Vlasov N.C', 2);
 insert into employees (name, departments_id) values (null, 3);
 insert into employees (name, departments_id) values (null, 2);
 
-select * from employees e left join departments d 
-on e.departments_id = d.id where e.name is null;
+select * from departments d left join employees e
+on d.id = e.departments_id where e is null;
 
 select * from employees e left join departments d
 on e.departments_id = d.id;
-select * from departments d right join employees e 
-on d.id = e.departments_id;
+select * from employees e right join departments d
+on e.departments_id = d.id;
