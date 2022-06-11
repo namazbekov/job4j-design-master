@@ -21,7 +21,7 @@ insert into employees (name, departments_id) values (null, 2);
 select * from departments d left join employees e
 on d.id = e.departments_id where e is null;
 
-select * from employees e left join departments d
+select d.name, e.name, e.departments_id from employees e left join departments d
 on e.departments_id = d.id;
-select * from employees e right join departments d
+select d.name, e.name, e.departments_id from employees e right join departments d
 on e.departments_id = d.id;
