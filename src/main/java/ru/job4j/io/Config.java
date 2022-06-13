@@ -16,7 +16,7 @@ public class Config {
         this.path = path;
     }
 
-    public void load() {
+    public Map<String, String> load() {
         String elements;
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             while ((elements = read.readLine()) != null) {
@@ -37,6 +37,7 @@ public class Config {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return values;
     }
 
     public String value(String key) {
@@ -45,6 +46,14 @@ public class Config {
             element = values.get(key);
         } else {
             throw new NoSuchElementException();
+        }
+        return element;
+    }
+
+    public String key(Map<String, String> map) {
+        String element = null;
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            element = entry.getKey();
         }
         return element;
     }
