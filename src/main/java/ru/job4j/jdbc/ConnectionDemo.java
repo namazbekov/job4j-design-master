@@ -14,8 +14,8 @@ public class ConnectionDemo {
         Config config = new Config("./data/app.properties");
         Map<String, String> map = config.load();
         for (Map.Entry<String, String> map1 : map.entrySet()) {
-            Class.forName(""+ map1.getKey());
-            url = "" + map1.getValue();
+            Class.forName("\"" + map1.getKey() + "\"");
+            url = "\"" + map1.getValue() + "\"";
         }
         String login = "postgres";
         String password = "password";

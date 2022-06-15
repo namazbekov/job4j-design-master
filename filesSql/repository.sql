@@ -49,9 +49,9 @@ values ('Nissan', 1, 1, null);
 
 
 select c.name, c.body_id, c.engine_id, c.transmission_id
-from car c left join body b on c.id = b.id
-left join engine e on c.id = e.id
-left join transmission t on c.id = t.id;
+from car c left join body b on c.body_id = b.id
+left join engine e on c.engine_id = e.id
+left join transmission t on c.transmission_id = t.id;
 
 select b.name as body, c.name as car from body b left join car c
 on b.id = c.body_id where c.body_id is null;
