@@ -9,12 +9,12 @@ public class TableEditor implements AutoCloseable {
 
     private static Connection connection;
 
-    private Statement statement = null;
+    private Statement statement;
 
     private static Properties properties;
 
     public TableEditor(Properties properties) throws SQLException {
-        TableEditor.properties = properties;
+        TableEditor.properties = new Properties(properties);
         initConnection();
     }
 
@@ -90,17 +90,19 @@ public class TableEditor implements AutoCloseable {
         properties = new Properties();
         try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("properties.properties")) {
             properties.load(in);
+            TableEditor tableEditor = new TableEditor(properties);
+            tableEditor.createTable(" animal");
+            System.out.println(getTableScheme(connection, "animal"));
+            tableEditor.addColumn("animal", "nameAnimal", "text");
+            System.out.println(getTableScheme(connection, "animal"));
+            tableEditor.renameColumn(
+                    "animal", " nameAnimal", "ageAnimal");
+            System.out.println(getTableScheme(connection, "animal"));
+            tableEditor.dropColumn("animal", "ageAnimal");
+            System.out.println(getTableScheme(connection, "animal"));
+            tableEditor.dropTable("animal");
+            connection.close();
         }
-        TableEditor tableEditor = new TableEditor(properties);
-        tableEditor.createTable(" animal");
-        System.out.println(getTableScheme(connection, "animal"));
-        tableEditor.addColumn("animal", "nameAnimal", "text");
-        System.out.println(getTableScheme(connection, "animal"));
-        tableEditor.renameColumn(
-                "animal", " nameAnimal", "ageAnimal");
-        System.out.println(getTableScheme(connection, "animal"));
-        tableEditor.dropColumn("animal", "ageAnimal");
-        System.out.println(getTableScheme(connection, "animal"));
-        tableEditor.dropTable("animal");
+        System.out.println(connection.isClosed());
     }
 }
