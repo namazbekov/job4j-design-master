@@ -7,21 +7,22 @@ import java.util.StringJoiner;
 
 public class TableEditor implements AutoCloseable {
 
-    private static Connection connection;
+    private Connection connection;
 
     private Statement statement;
 
-    private static Properties properties;
+    private Properties properties;
 
     public TableEditor(Properties properties) throws SQLException {
-        TableEditor.properties = new Properties(properties);
-        initConnection();
+        this.properties = properties;
+        this.connection = initConnection();
+        this.statement = connection.createStatement();
     }
 
-    private void initConnection() throws SQLException {
-        connection = DriverManager.getConnection(
+    private Connection initConnection() throws SQLException {
+        return DriverManager.getConnection(
                 properties.getProperty("url"), properties.getProperty("username"), properties.getProperty("password"));
-        statement = connection.createStatement();
+
     }
 
     public void createTable(String tableName) throws  Exception {
@@ -87,22 +88,21 @@ public class TableEditor implements AutoCloseable {
 
 
     public static void main(String[] args) throws Exception {
-        properties = new Properties();
+        Properties properties = new Properties();
         try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("properties.properties")) {
             properties.load(in);
-            TableEditor tableEditor = new TableEditor(properties);
-            tableEditor.createTable(" animal");
-            System.out.println(getTableScheme(connection, "animal"));
-            tableEditor.addColumn("animal", "nameAnimal", "text");
-            System.out.println(getTableScheme(connection, "animal"));
-            tableEditor.renameColumn(
-                    "animal", " nameAnimal", "ageAnimal");
-            System.out.println(getTableScheme(connection, "animal"));
-            tableEditor.dropColumn("animal", "ageAnimal");
-            System.out.println(getTableScheme(connection, "animal"));
-            tableEditor.dropTable("animal");
-            connection.close();
+            try (TableEditor tableEditor = new TableEditor(properties)) {
+                tableEditor.createTable(" animal");
+                System.out.println(getTableScheme(tableEditor.connection, "animal"));
+                tableEditor.addColumn("animal", "nameAnimal", "text");
+                System.out.println(getTableScheme(tableEditor.connection, "animal"));
+                tableEditor.renameColumn(
+                        "animal", " nameAnimal", "ageAnimal");
+                System.out.println(getTableScheme(tableEditor.connection, "animal"));
+                tableEditor.dropColumn("animal", "ageAnimal");
+                System.out.println(getTableScheme(tableEditor.connection, "animal"));
+                tableEditor.dropTable("animal");
+            }
         }
-        System.out.println(connection.isClosed());
     }
 }
