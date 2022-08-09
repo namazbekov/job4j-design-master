@@ -18,7 +18,7 @@ public class ImportDB {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             String currentLine;
-            while ((currentLine = rd.readLine())!= null) {
+            while ((currentLine = rd.readLine()) != null) {
                 String[] array = currentLine.split(";");
                 users.add(new User(array[0], array[array.length - 1]));
             }
