@@ -20,6 +20,11 @@ public class ImportDB {
             String currentLine;
             while ((currentLine = rd.readLine()) != null) {
                 String[] array = currentLine.split(";");
+                for (int i = 0; i < array.length; i++) {
+                    if (array.length != 2 || array[i] == null) {
+                        throw new IllegalArgumentException();
+                    }
+                }
                 users.add(new User(array[0], array[array.length - 1]));
             }
         }
@@ -56,7 +61,9 @@ public class ImportDB {
 
     public static void main(String[] args) throws Exception {
         Properties cfg = new Properties();
-        try (InputStream in = ImportDB.class.getClassLoader().getResourceAsStream("app.properties")) {
+        try (InputStream in =
+                     ImportDB.class.getClassLoader().getResourceAsStream("app.properties")
+        ) {
             cfg.load(in);
         }
         ImportDB db = new ImportDB(cfg, "data/dump.txt");
