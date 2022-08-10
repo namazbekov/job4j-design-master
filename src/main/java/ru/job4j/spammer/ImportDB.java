@@ -20,11 +20,10 @@ public class ImportDB {
             String currentLine;
             while ((currentLine = rd.readLine()) != null) {
                 String[] array = currentLine.split(";");
-                if (array.length == 2 && !array[0].isBlank() && !array[1].isBlank()) {
-                    users.add(new User(array[0], array[1]));
-                } else {
+                if (array.length != 2 || array[0].isBlank() || array[1].isBlank()) {
                     throw new IllegalArgumentException("wrong argument");
                 }
+                users.add(new User(array[0], array[1]));
             }
         }
         return users;
