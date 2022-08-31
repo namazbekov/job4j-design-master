@@ -1,6 +1,6 @@
 package ru.job4j.map;
 
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import org.junit.Test;
 import ru.job4j.myexercises.HashTableDemo;
@@ -11,7 +11,7 @@ import java.util.Iterator;
 public class SimpleMapTest {
 
     @Test
-    public <K, V> void whenAdd() {
+    public <V> void whenAdd() {
         HashTableDemo<String, Integer> table = new HashTableDemo<>();
         table.put("Dastan", 12345);
         assertThat(table.get("Dastan"), is(12345));
@@ -38,7 +38,6 @@ public class SimpleMapTest {
         table.put("Ivan", 3);
         table.put("Sasha", 600);
         Iterator<String> iterator = table.iterator();
-        iterator.hasNext();
         iterator.next();
         iterator.next();
         iterator.next();
@@ -49,7 +48,7 @@ public class SimpleMapTest {
         table.put("Dastan", 12);
         table.put("Ivan", 15);
         Iterator<String> iterator = table.iterator();
-        iterator.hasNext();
+        System.out.println(iterator.hasNext());
     }
 
     @Test
@@ -59,7 +58,7 @@ public class SimpleMapTest {
         table.put("Ivan", 3);
         table.put("Sasha", 600);
         Iterator<String> it = table.iterator();
-        it.hasNext();
+        System.out.println(it.hasNext());
     }
     @Test(expected = ConcurrentModificationException.class)
     public void whenCorruptedIt() {
@@ -91,6 +90,6 @@ public class SimpleMapTest {
         table.put(" ", 5);
         Iterator<String> it = table.iterator();
         it.next();
-        it.hasNext();
+        System.out.println(it.hasNext());
     }
 }
